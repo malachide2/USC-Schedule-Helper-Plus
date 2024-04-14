@@ -4,8 +4,19 @@
   "description": "Shows grade distribution!",
   "version": "1.0",
   "action": {
+    "default_icon": "images/Logo.png",
     "default_popup": "popup/popup.html"
   },
+  "content_scripts": [
+    {
+      "matches": [
+        "*://classes.usc.edu/*/classes/*",
+        "*://webreg.usc.edu/*",
+        "*://ratemyprofessors.com/professor/*"
+      ],
+      "js": ["content/content.js"]
+    }
+  ],
   "permissions": [
     "storage"
   ],

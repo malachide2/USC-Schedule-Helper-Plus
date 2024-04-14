@@ -1,11 +1,25 @@
+@charset "UTF-8";
+@import url(https://fonts.googleapis.com/css?family=Open+Sans:400,300,600,700);
+
 body {
-  height: 200px;
   width: 400px;
-  font-family: "Rubik";
-  color: #666666;
-  background-color: #F7D64A;
-  margin: 0;
-  padding: 0;
-  display: flex;
-  flex-direction: column;
+  background: white;
+  font-family: "Open Sans";
+  font-weight: 400;
+  color: #4f4f4f;
+  position: relative;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  font: inherit;
+  font-size: 100%;
+  vertical-align: baseline;
+}
+  
+ol, ul {
+  list-style: none;
+}
+
+.table {
+    display: flex;
+    flex-direction: column;
 }
