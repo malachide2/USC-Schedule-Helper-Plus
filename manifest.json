@@ -14,7 +14,12 @@
         "*://webreg.usc.edu/*",
         "https://www.ratemyprofessors.com/professor/*"
       ],
-      "js": ["content/content.js"]
+      "css": ["content/content.css"],
+      "js": [
+        "content/jquery.js",
+        "content/content.js",
+        "content/webreg.js"
+      ]
     }
   ],
   "permissions": [
@@ -24,5 +29,16 @@
     "*://classes.usc.edu/*/classes/*",
     "*://webreg.usc.edu/*",
     "https://www.ratemyprofessors.com/professor/*"
+  ],
+  "web_accessible_resources": [
+    {
+      "resources": [
+        "data/*",
+        "content/*"
+      ],
+      "matches": [
+        "*://*/*"
+      ]
+    }
   ]
 }

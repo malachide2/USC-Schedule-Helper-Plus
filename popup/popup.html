@@ -3,6 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <link rel="stylesheet" href="popup.css" />
+    <script src="content/jquery.js"></script>
   </head>
 
   <body>
@@ -12,16 +13,17 @@
         <ul class="table">
           <li class="field"><label class="checkbox" for="chkExtensionDisabled">
             <input type="checkbox" id="chkExtensionDisabled"><span></span>
-            <div style="display:inline">Enable USC Schedule Helper+</div>
+            <div style="display:inline">Show Grades in Web Reg</div>
           </label></li>
           <li class="field lastField"><label class="checkbox" for="chkUnits">
             <input type="checkbox" id="chkUnits"><span></span>
-            <div style="display:inline">Show Grades in Web Reg</div>
+            <div style="display:inline">Show Grade Details in RateMyProfessor</div>
           </label></li>
         </ul>
       </fieldset>
     </form>
 
-    <script type="text/javascript" src="content/content.js"></script>
+    <script src="content/content.js"></script>
+    <script src="content/webreg.js"></script>
   </body>
 </html>
