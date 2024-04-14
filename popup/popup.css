@@ -1,0 +1,11 @@
+body {
+  height: 200px;
+  width: 400px;
+  font-family: "Rubik";
+  color: #666666;
+  background-color: #F7D64A;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+}

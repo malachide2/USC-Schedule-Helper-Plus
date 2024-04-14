@@ -1,0 +1,16 @@
+{
+  "manifest_version": 3,
+  "name": "USC Schedule Helper+",
+  "description": "Shows grade distribution!",
+  "version": "1.0",
+  "action": {
+    "default_popup": "popup/popup.html"
+  },
+  "permissions": [
+    "storage"
+  ],
+  "host_permissions": [
+    "*://classes.usc.edu/*/classes/*",
+    "*://webreg.usc.edu/*"
+  ]
+}
