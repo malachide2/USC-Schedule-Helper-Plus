@@ -12,7 +12,7 @@
       "matches": [
         "*://classes.usc.edu/*/classes/*",
         "*://webreg.usc.edu/*",
-        "*://ratemyprofessors.com/professor/*"
+        "https://www.ratemyprofessors.com/professor/*"
       ],
       "js": ["content/content.js"]
     }
@@ -22,6 +22,7 @@
   ],
   "host_permissions": [
     "*://classes.usc.edu/*/classes/*",
-    "*://webreg.usc.edu/*"
+    "*://webreg.usc.edu/*",
+    "https://www.ratemyprofessors.com/professor/*"
   ]
 }
