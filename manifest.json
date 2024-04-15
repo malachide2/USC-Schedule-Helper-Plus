@@ -1,7 +1,7 @@
 {
   "manifest_version": 3,
   "name": "USC Schedule Helper+",
-  "description": "Shows grade distribution!",
+  "description": "Shows grade distribution on RateMyProfessor!",
   "version": "1.0",
   "action": {
     "default_icon": "images/Logo.png",
@@ -23,7 +23,8 @@
     }
   ],
   "permissions": [
-    "storage"
+    "storage",
+    "webNavigation"
   ],
   "host_permissions": [
     "*://classes.usc.edu/*/classes/*",
@@ -34,7 +35,8 @@
     {
       "resources": [
         "data/*",
-        "content/*"
+        "content/*",
+        "images/*"
       ],
       "matches": [
         "*://*/*"

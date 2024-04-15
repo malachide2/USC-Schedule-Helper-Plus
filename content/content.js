@@ -1,7 +1,32 @@
+// chrome.webNavigation.onHistoryStateUpdated.addListener(function(details) {
+//     console.log(details.frameId);
+//     if(details.frameId === 0) {
+//         // Fires only when details.url === currentTab.url
+//         chrome.tabs.get(details.tabId, function(tab) {
+//             console.log("Tab url: " + tab.url);
+//             console.log("Details url: " + details.url);
+//             if(tab.url === details.url) {
+//                 console.log("onHistoryStateUpdated");
+//             }
+//         });
+//     } else{
+//         console.log("HIHIHIHIHI");
+//     }
+// });
+// chrome.webNavigation.onCompleted.addListener(function(details) {
+//     console.log("URL Updated:", details.url);
+//     // Place your script code here
+//     // This script will be executed whenever the URL is updated
+// }, {
+//     url: [{
+//         hostEquals: 'https://www.ratemyprofessors.com/professor/*' // Specify the domain(s) for which you want to run the script
+//     }]
+// });
+
 const currentURL = window.location.href;
-
+console.log("Current URL: " + currentURL);
 if (currentURL.includes("ratemyprof")) {
-
+    console.log("Inside the site");
     let numRefresh = 0;
     // Function to fetch and process all hidden data
     function fetchAllData() {
@@ -15,26 +40,9 @@ if (currentURL.includes("ratemyprof")) {
             }
             return false;
         }
-        
-        // Wait for the "Load More Ratings" button to be clicked and data to be loaded
-        async function waitForData() {
-            return new Promise(resolve => {
-                const intervalId = setInterval(() => {
-                    const elements = document.querySelectorAll(".MetaItem__StyledMetaItem-y0ixml-0");
-                    if (elements.length > 0) {
-                        clearInterval(intervalId);
-                        resolve();
-                    }
-                }, 1000); // Adjust the interval as needed
-            });
-        }
     
         // Click the "Load More Ratings" button to load hidden data
         const loadMoreClicked = clickLoadMoreButton();
-    
-        // if (loadMoreClicked) {
-        //     await waitForData(); // Wait for the data to be loaded
-        // }
     
     
         // elements is the div item that stores the rating data from each reviewer
@@ -122,13 +130,21 @@ if (currentURL.includes("ratemyprof")) {
         let avgGrade = (numberRatings !== 0) ? totalGradeCredit / numberRatings : -1;
         let numberTotal = numberRatings + gradeDictionary["Pass"] + gradeDictionary["No Pass"];
         let passRate = (numberTotal !== 0) ? (numberPassed / numberTotal) * 100 : -1;
-        let aRate = (numberRatings !== 0) ? (gradeDictionary["A"] / numberRatings) * 100 : -1;
-        let overBRate = (numberRatings !== 0) ? ( (gradeDictionary["A-"] + gradeDictionary["A"] + gradeDictionary["B+"]) / numberRatings) * 100 : -1;
+        let aRate = (numberRatings !== 0) ? ( (gradeDictionary["A"] + gradeDictionary["A+"])/ numberRatings) * 100 : -1;
+        let overBRate = (numberRatings !== 0) ? ( (gradeDictionary["A-"] + gradeDictionary["A+"] + gradeDictionary["A"] + gradeDictionary["B+"]) / numberRatings) * 100 : -1;
     
-        avgGrade = avgGrade.toFixed(2);
-        passRate = passRate.toFixed(0);
-        aRate = aRate.toFixed(0);
-        overBRate = overBRate.toFixed(0);
+        if (avgGrade != -1){
+            avgGrade = avgGrade.toFixed(2);
+        } else avgGrade = "--";
+        if(passRate != -1){
+            passRate = passRate.toFixed(0);
+        } else passRate = "--";
+        if(aRate != -1){
+            aRate = aRate.toFixed(0);
+        } else aRate = "--";
+        if(overBRate != -1){
+            overBRate = overBRate.toFixed(0);
+        } else overBRate = "--";
     
         console.log("Average Grade for this professor: " + avgGrade);
         console.log("Number of grade ratings: " + numberRatings);
@@ -295,6 +311,7 @@ if (currentURL.includes("ratemyprof")) {
         var reloadButton = document.createElement("button");
         reloadButton.textContent = "Reload"; // Button text
         reloadButtonDiv.appendChild(reloadButton);
+
     
         // Add event listener to reloadButton
         if(reloadButtonDiv){
@@ -394,7 +411,10 @@ if (currentURL.includes("ratemyprof")) {
     // Helper function to calculate color based on grade value
     function calculateColorFromLetterGrade(letterGrade) {
         // Convert grade to a number
-        if (letterGrade === "A") {
+        if (letterGrade === "A+") {
+            return '#13bf13'; // A
+        }
+        else if (letterGrade === "A") {
             return '#13bf13'; // A
         } else if (letterGrade === "A-") {
             return '#8ac93c'; // A-
@@ -496,4 +516,6 @@ if (currentURL.includes("ratemyprof")) {
         fetchAllData();
     }
 
+
 }
+
