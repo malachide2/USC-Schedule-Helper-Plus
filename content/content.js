@@ -1,36 +1,22 @@
-// chrome.webNavigation.onHistoryStateUpdated.addListener(function(details) {
-//     console.log(details.frameId);
-//     if(details.frameId === 0) {
-//         // Fires only when details.url === currentTab.url
-//         chrome.tabs.get(details.tabId, function(tab) {
-//             console.log("Tab url: " + tab.url);
-//             console.log("Details url: " + details.url);
-//             if(tab.url === details.url) {
-//                 console.log("onHistoryStateUpdated");
-//             }
-//         });
-//     } else{
-//         console.log("HIHIHIHIHI");
-//     }
-// });
-// chrome.webNavigation.onCompleted.addListener(function(details) {
-//     console.log("URL Updated:", details.url);
-//     // Place your script code here
-//     // This script will be executed whenever the URL is updated
-// }, {
-//     url: [{
-//         hostEquals: 'https://www.ratemyprofessors.com/professor/*' // Specify the domain(s) for which you want to run the script
-//     }]
-// });
+let numRefresh = 0;
+chrome.runtime.onMessage.addListener((message) => {
+    if (message.url && message.url.includes("ratemyprof")) {
+      console.log("Professor page detected:", message.url);
+      // Now you can call your script to process data (runScript())
+      numRefresh = 0;
+      location.reload();
+    }
+  });
 
 const currentURL = window.location.href;
 console.log("Current URL: " + currentURL);
-if (currentURL.includes("ratemyprof")) {
+if (currentURL.includes("https://www.ratemyprofessors.com/professor/")) {
     console.log("Inside the site");
-    let numRefresh = 0;
+    
     // Function to fetch and process all hidden data
     function fetchAllData() {
         numRefresh += 1;
+        console.log("Number of refresh: " + numRefresh);
         // Function to simulate clicking the "Load More Ratings" button
         function clickLoadMoreButton() {
             const loadMoreButton = document.querySelector(".Buttons__Button-sc-19xdot-1");
@@ -249,22 +235,28 @@ if (currentURL.includes("ratemyprof")) {
             return "--";
         }
     }
+
     
     // Function to generate and append elements for displaying statistics
     function generateStatisticsElements(avgGrade, gradeDictionary, mostOftenGrade, passRate, aRate, overBRate, convertedGrade) {
         let profStatsDiv = document.querySelector(".TeacherFeedback__StyledTeacherFeedback-gzhlj7-0");
+        let profStatsParentDiv = document.querySelector(".TeacherInfo__StyledTeacher-ti1fio-1");
+        let beforeDiv = document.querySelector(".TeacherInfo__InfoButtonContainer-ti1fio-4");
     
         // 1st new row
         let profStatsDiv2 = document.createElement("div");
         let avgGradeDiv = createFeedbackItemDiv("Avg Grade", convertedGrade);
+        console.log("Avg Grade: " + convertedGrade)
         let gradePointElem = createFeedbackItemDiv("Class GPA", avgGrade);
+        console.log("Class GPA: " + avgGrade)
         avgGradeDiv.classList.add("avgGradeDiv");
         gradePointElem.classList.add("gradePointElem");
         profStatsDiv2.appendChild(avgGradeDiv)
         profStatsDiv2.appendChild(gradePointElem)
         profStatsDiv2.classList.add("TeacherFeedback__StyledTeacherFeedback-gzhlj7-0", "cxVUGc");
         profStatsDiv2.classList.add("profStatsDiv2");
-        profStatsDiv.parentNode.insertBefore(profStatsDiv2, document.querySelector(".TeacherInfo__InfoButtonContainer-ti1fio-4"));
+        profStatsParentDiv.insertBefore(profStatsDiv2, beforeDiv);
+        
     
         gradePointElem.style.backgroundColor = calculateColorFromGrade(avgGrade);
         avgGradeDiv.style.backgroundColor = calculateColorFromLetterGrade(convertedGrade);
@@ -280,7 +272,7 @@ if (currentURL.includes("ratemyprof")) {
         profStatsDiv3.appendChild(passRateElem)
         profStatsDiv3.classList.add("TeacherFeedback__StyledTeacherFeedback-gzhlj7-0", "cxVUGc");
         profStatsDiv3.classList.add("profStatsDiv3");
-        profStatsDiv.parentNode.insertBefore(profStatsDiv3, document.querySelector(".TeacherInfo__InfoButtonContainer-ti1fio-4"));
+        profStatsParentDiv.insertBefore(profStatsDiv3, beforeDiv);
     
         modeGradeDiv.style.backgroundColor = calculateColorFromLetterGrade(mostOftenGrade);
         passRateElem.style.backgroundColor = calculateColorFromPassRate(passRate);
@@ -296,7 +288,7 @@ if (currentURL.includes("ratemyprof")) {
         profStatsDiv4.appendChild(overBRateElem)
         profStatsDiv4.classList.add("TeacherFeedback__StyledTeacherFeedback-gzhlj7-0", "cxVUGc");
         profStatsDiv4.classList.add("profStatsDiv4");
-        profStatsDiv.parentNode.insertBefore(profStatsDiv4, document.querySelector(".TeacherInfo__InfoButtonContainer-ti1fio-4"));
+        profStatsParentDiv.insertBefore(profStatsDiv4, beforeDiv);
     
         aGradeRateElem.style.backgroundColor = calculateColorFromARate(aRate);
         overBRateElem.style.backgroundColor = calculateColorFromOverBRate(overBRate);

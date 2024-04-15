@@ -7,6 +7,9 @@
     "default_icon": "images/Logo.png",
     "default_popup": "popup/popup.html"
   },
+  "background": {
+    "service_worker": "content/background.js"
+  },
   "content_scripts": [
     {
       "matches": [
@@ -18,7 +21,8 @@
       "js": [
         "content/jquery.js",
         "content/content.js",
-        "content/webreg.js"
+        "content/webreg.js",
+        "content/background.js"
       ]
     }
   ],
