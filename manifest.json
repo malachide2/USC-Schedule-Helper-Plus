@@ -21,8 +21,7 @@
       "js": [
         "content/jquery.js",
         "content/content.js",
-        "content/webreg.js",
-        "content/background.js"
+        "content/webreg.js"
       ]
     }
   ],
